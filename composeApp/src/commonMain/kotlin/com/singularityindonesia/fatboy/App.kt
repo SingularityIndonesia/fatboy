@@ -2,7 +2,7 @@ package com.singularityindonesia.fatboy
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.singularityindonesia.fatboy.ui.Root
+import com.singularityindonesia.fatboy.Main
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -10,6 +10,6 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 fun App() {
 //    val user = remember { User() }
     MaterialTheme {
-        Root()
+        Main()
     }
 }

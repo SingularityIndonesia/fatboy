@@ -1,16 +1,16 @@
-package com.singularityindonesia.fatboy.ui.plot
+package com.singularityindonesia.fatboy.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.singularityindonesia.fatboy.ui.Home
-import com.singularityindonesia.fatboy.ui.Profile
+import com.singularityindonesia.fatboy.ui.pane.Home
+import com.singularityindonesia.fatboy.ui.pane.Profile
 import com.singularityindonesia.fatboy.ui.route.Route
 
 @Composable
-fun RootPlot(
+fun MainPlot(
     modifier: Modifier = Modifier,
     navController: NavHostController
 ) {

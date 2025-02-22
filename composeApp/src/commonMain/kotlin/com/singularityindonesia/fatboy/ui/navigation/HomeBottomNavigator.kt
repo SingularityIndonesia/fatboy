@@ -1,4 +1,4 @@
-package com.singularityindonesia.fatboy.ui.navigator
+package com.singularityindonesia.fatboy.ui.navigation
 
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.NavigationBarItem
@@ -7,10 +7,9 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.singularityindonesia.fatboy.ui.route.HomeBottomNavigationRoute
 import com.singularityindonesia.fatboy.ui.route.Route
-import kotlinx.coroutines.launch
 
 @Composable
-fun HomeBottomNavigation(
+fun HomeBottomNavigator(
     navController: NavHostController,
     onItemClicked: (item: HomeBottomNavigationRoute) -> Unit
 ) {
