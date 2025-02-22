@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.singularityindonesia.core.navigation.DestinationProvider
 import com.singularityindonesia.fatboy.ui.navigation.HomeBottomNavigator
 import com.singularityindonesia.fatboy.ui.navigation.MainPlot
+import com.singularityindonesia.user.UserRecordProvider
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -49,6 +50,8 @@ private fun Provider(
     content: @Composable () -> Unit
 ) {
     DestinationProvider(navController) {
-        content()
+        UserRecordProvider {
+            content()
+        }
     }
 }
