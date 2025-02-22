@@ -12,7 +12,7 @@ import com.singularityindonesia.fatboy.ui.route.Route
 fun HomeBottomNavigator(
     onItemClicked: (item: HomeBottomNavigationRoute) -> Unit
 ) {
-    val menus = remember { listOf(Route.Home, Route.Profile) }
+    val menus = remember { HomeBottomNavigationRoute.menus }
 
     BottomAppBar {
         menus.map {
