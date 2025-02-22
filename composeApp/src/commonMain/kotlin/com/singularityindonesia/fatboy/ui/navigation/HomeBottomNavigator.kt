@@ -2,12 +2,11 @@ package com.singularityindonesia.fatboy.ui.navigation
 
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.runtime.*
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import com.singularityindonesia.core.navigation.CurrentDestination
 import com.singularityindonesia.fatboy.ui.route.HomeBottomNavigationRoute
 import com.singularityindonesia.fatboy.ui.route.Route
-import com.singularityindonesia.core.navigation.CurrentDestination
 
 @Composable
 fun HomeBottomNavigator(
