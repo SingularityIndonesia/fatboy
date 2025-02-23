@@ -39,7 +39,7 @@ kotlin {
 android {
     namespace = "com.singularityindonesia.fatboy"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-
+    compileSdk = 35
     defaultConfig {
         applicationId = "com.singularityindonesia.fatboy"
         minSdk = libs.versions.android.minSdk.get().toInt()
