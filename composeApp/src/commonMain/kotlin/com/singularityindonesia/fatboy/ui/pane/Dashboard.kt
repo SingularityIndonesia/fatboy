@@ -29,7 +29,6 @@ fun Dashboard() {
         val quarterDp = ((panelSize.value.width / density.density) - (16 * 5)).div(4f).toInt().dp
         val quarterContentSize = if (quarterDp <= 0.dp) 10.dp else quarterDp
         val cel = GridCells.Adaptive(quarterContentSize)
-        print("aldnaldn $quarterContentSize")
         derivedStateOf { cel }
     }
     val gridState = rememberLazyGridState()
