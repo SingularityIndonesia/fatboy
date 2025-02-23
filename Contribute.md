@@ -3,7 +3,7 @@
 1. Star the project
 2. Fork
 3. Make your own ticket as your proposal [here](). Note: make sore you put your name and email for maintainer to contact you.
-4. If the ticket is approved, we will reach you and make an make an offering.
+4. If the ticket is approved, we will reach you and we will make an offering.
 5. If deal, the tickets will be move to Todo, and you are good to go.
 6. Once you done with the effort, you can make PR and submit a pull request.
 
