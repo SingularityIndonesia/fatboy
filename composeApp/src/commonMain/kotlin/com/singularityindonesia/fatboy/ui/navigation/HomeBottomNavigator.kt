@@ -23,6 +23,7 @@ fun HomeBottomNavigator(
         modifier = Modifier.clip(
             RoundedCornerShape(16.dp,16.dp,0.dp,0.dp)
         ),
+        // fixme: user token instead
         containerColor = Color.White,
     ) {
         menus.map {
