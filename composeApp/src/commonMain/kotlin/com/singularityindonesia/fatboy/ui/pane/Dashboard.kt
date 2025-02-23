@@ -41,22 +41,18 @@ fun Dashboard() {
             },
         state = gridState,
         columns = gridCells.value,
-        contentPadding = PaddingValues(16.dp),
+        contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
         item(
             span = { GridItemSpan(4) }
         ) {
-            Box(
-                modifier = Modifier.padding(
-                    vertical = 16.dp
-                )
+            MediumCard(
+                modifier = Modifier.height(200.dp),
+                contentPadding = PaddingValues(16.dp)
             ) {
-                Text(
-                    text = "Wellcome home, ${user?.name ?: "..."}",
-                    style = MaterialTheme.typography.titleLarge,
-                )
+                Text("Expanded Content")
             }
         }
         repeat(11) { index ->

@@ -11,9 +11,9 @@ sealed interface Route {
     val route: String
 
     @Serializable
-    data object Home: HomeBottomNavigationRoute {
+    data object Dashboard: HomeBottomNavigationRoute {
 
-        override val route: String = "home"
+        override val route: String = "dashboard"
 
         @Composable
         override fun Icon() {

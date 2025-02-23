@@ -34,7 +34,7 @@ fun Profile(
     ) {
         item {
             Text(
-                modifier = Modifier.padding(top = 16.dp, start = 16.dp, bottom = 16.dp),
+                modifier = Modifier.padding(top = 8.dp, start = 16.dp, bottom = 16.dp),
                 text = "Profile of, ${userRecord?.name ?: "..."}",
                 style = MaterialTheme.typography.titleLarge
             )

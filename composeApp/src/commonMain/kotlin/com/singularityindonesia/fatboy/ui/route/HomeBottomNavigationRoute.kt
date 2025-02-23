@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 sealed interface HomeBottomNavigationRoute : Route {
 
     companion object {
-        val menus = listOf(Route.Home, Route.Profile)
+        val menus = listOf(Route.Dashboard, Route.Profile)
     }
 
     @Composable

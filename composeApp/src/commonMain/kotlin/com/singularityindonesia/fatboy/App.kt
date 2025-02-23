@@ -1,28 +1,38 @@
 package com.singularityindonesia.fatboy
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.capitalize
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.singularityindonesia.core.navigation.CurrentDestination
 import com.singularityindonesia.core.navigation.DestinationProvider
+import com.singularityindonesia.fatboy.ui.component.HeaderComponent1
 import com.singularityindonesia.fatboy.ui.navigation.HomeBottomNavigator
 import com.singularityindonesia.fatboy.ui.navigation.MainPlot
+import com.singularityindonesia.fatboy.ui.route.Route
 import com.singularityindonesia.user.UserRecordProvider
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @Preview
 fun App() {
     val navController = rememberNavController()
 
-    MaterialTheme {
-        Provider(navController) {
+    Provider(navController) {
+        MaterialTheme {
             Scaffold(
                 topBar = {
-
+                    HeaderComponent1(
+                        modifier = Modifier.safeContentPadding(),
+                        goToProfile = {
+                            navController.navigate(Route.Profile.route)
+                        }
+                    )
                 },
                 bottomBar = {
                     HomeBottomNavigator(

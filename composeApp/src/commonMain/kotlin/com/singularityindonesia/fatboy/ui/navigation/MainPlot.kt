@@ -18,9 +18,9 @@ fun MainPlot(
     NavHost(
         modifier = modifier,
         navController = navController,
-        startDestination = Route.Home.route,
+        startDestination = Route.Dashboard.route,
     ) {
-        composable(route = Route.Home.route) { Dashboard() }
+        composable(route = Route.Dashboard.route) { Dashboard() }
         composable(route = Route.Profile.route) { Profile() }
     }
 }
