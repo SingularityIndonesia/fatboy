@@ -17,7 +17,7 @@ class User(
 
     private val _state = mutableVMStateFlow<UserRecord>()
     val state = _state.onInit { fetch() }
-    val record = state.selectSuccess { it.data }
+    val record = state.catchSuccess { it.data }
 
     private var fetchingJob: Job? = null
 

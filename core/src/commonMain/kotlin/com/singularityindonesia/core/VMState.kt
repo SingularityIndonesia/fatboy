@@ -70,9 +70,20 @@ inline fun <reified T> StateFlow<VMState<T>>.onInit(crossinline bloc: () -> Unit
     }
 }
 
-inline fun <reified T, R> Flow<VMState<T>>.selectSuccess(crossinline map: (Result.Success<T>) -> R): Flow<R> {
+inline fun <reified T> Flow<VMState<T>>.catchSuccess(): Flow<Result.Success<T>> {
     return this.filterIsInstance<Result.Success<T>>()
-        .map(map)
+}
+
+inline fun <reified T, R> Flow<VMState<T>>.catchSuccess(crossinline map: (Result.Success<T>) -> R): Flow<R> {
+    return this.filterIsInstance<Result.Success<T>>().map(map)
+}
+
+inline fun <reified T> Flow<VMState<T>>.catchError(): Flow<Result.Error> {
+    return this.filterIsInstance<Result.Error>()
+}
+
+inline fun <reified T> Flow<VMState<T>>.catchError(crossinline map: (Result.Error) -> VMException): Flow<VMException> {
+    return this.filterIsInstance<Result.Error>().map(map)
 }
 
 fun <T> mutableVMStateFlow(): MutableStateFlow<VMState<T>> = MutableStateFlow(initial())
