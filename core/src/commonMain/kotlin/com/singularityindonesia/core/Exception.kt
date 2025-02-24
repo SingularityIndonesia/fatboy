@@ -1,5 +1,7 @@
 package com.singularityindonesia.core
 
+import kotlinx.coroutines.Job
+
 sealed class VMException : Exception() {
     class UnknownException(
         override val message: String? = null,
@@ -32,5 +34,15 @@ sealed class VMException : Exception() {
 fun toVmException(throwable: Throwable): VMException {
     return when {
         else -> VMException.UnknownException(throwable.message, throwable)
+    }
+}
+
+fun Job.handleException(bloc: (VMException) -> Unit): Job {
+    return this.apply {
+        invokeOnCompletion { e ->
+            if (e == null) return@invokeOnCompletion
+            val exception = toVmException(e)
+            bloc(exception)
+        }
     }
 }

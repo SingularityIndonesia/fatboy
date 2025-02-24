@@ -1,5 +1,7 @@
 package com.singularityindonesia.core
 
+import kotlinx.coroutines.flow.*
+
 sealed interface VMState<out T> {
 
     data object Initial : VMState<Nothing>
@@ -22,7 +24,7 @@ sealed interface Result<out T> : VMState<T> {
 // region Utils
 fun initial() = VMState.Initial
 fun loading() = VMState.Loading
-fun<T> success(data: T) = Result.Success(data)
+fun <T> success(data: T) = Result.Success(data)
 fun error(exception: VMException) = Result.Error(exception)
 
 fun <T> lift(error: VMException?, data: T?): Result<T> {
@@ -44,7 +46,7 @@ fun <T, R> VMState<T>.map(transformer: (T) -> R): VMState<R> {
     }
 }
 
-fun<T> VMState<T>.flatMapError(transformer: (Exception?) -> VMState<@UnsafeVariance T>): VMState<T> {
+fun <T> VMState<T>.flatMapError(transformer: (Exception?) -> VMState<@UnsafeVariance T>): VMState<T> {
     return when (this) {
         is VMState.Initial -> this
         is VMState.Loading -> this
@@ -53,12 +55,26 @@ fun<T> VMState<T>.flatMapError(transformer: (Exception?) -> VMState<@UnsafeVaria
     }
 }
 
-fun<T> VMState<T>.onSuccess(bloc: (T) -> Unit): VMState<T> {
+fun <T> VMState<T>.onSuccess(bloc: (T) -> Unit): VMState<T> {
     return this.also {
         if (this is Result.Success) {
             bloc.invoke(data)
         }
     }
 }
+
+inline fun <reified T> StateFlow<VMState<T>>.onInit(crossinline bloc: () -> Unit): Flow<VMState<T>> {
+    return this.onStart {
+        if (value is VMState.Initial)
+            bloc()
+    }
+}
+
+inline fun <reified T, R> Flow<VMState<T>>.selectSuccess(crossinline map: (Result.Success<T>) -> R): Flow<R> {
+    return this.filterIsInstance<Result.Success<T>>()
+        .map(map)
+}
+
+fun <T> mutableVMStateFlow(): MutableStateFlow<VMState<T>> = MutableStateFlow(initial())
 
 // endregion
