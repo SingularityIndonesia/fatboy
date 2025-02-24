@@ -16,7 +16,11 @@ class User(
     }
 
     private val _state = mutableVMStateFlow<UserRecord>()
+
+    @OptIn(ExperimentalStdlibApi::class)
     val state = _state.onInit { fetch() }
+
+    @OptIn(ExperimentalStdlibApi::class)
     val record = state.catchSuccess { it.data }
 
     private var fetchingJob: Job? = null

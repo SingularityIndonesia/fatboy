@@ -22,11 +22,16 @@ sealed interface Result<out T> : VMState<T> {
 }
 
 // region Utils
+// region Constructor
 fun initial() = VMState.Initial
 fun loading() = VMState.Loading
 fun <T> success(data: T) = Result.Success(data)
 fun error(exception: VMException) = Result.Error(exception)
+fun <T> mutableVMStateFlow(): MutableStateFlow<VMState<T>> = MutableStateFlow(initial())
+// endregion
 
+// region Reducer
+@ExperimentalStdlibApi
 fun <T> lift(error: VMException?, data: T?): Result<T> {
     return if (error != null) {
         Result.Error(error)
@@ -37,6 +42,7 @@ fun <T> lift(error: VMException?, data: T?): Result<T> {
     }
 }
 
+@ExperimentalStdlibApi
 fun <T, R> VMState<T>.map(transformer: (T) -> R): VMState<R> {
     return when (this) {
         is VMState.Initial -> this
@@ -46,6 +52,7 @@ fun <T, R> VMState<T>.map(transformer: (T) -> R): VMState<R> {
     }
 }
 
+@ExperimentalStdlibApi
 fun <T> VMState<T>.flatMapError(transformer: (Exception?) -> VMState<@UnsafeVariance T>): VMState<T> {
     return when (this) {
         is VMState.Initial -> this
@@ -55,6 +62,29 @@ fun <T> VMState<T>.flatMapError(transformer: (Exception?) -> VMState<@UnsafeVari
     }
 }
 
+@ExperimentalStdlibApi
+inline fun <reified T> Flow<VMState<T>>.catchSuccess(): Flow<Result.Success<T>> {
+    return this.filterIsInstance<Result.Success<T>>()
+}
+
+@ExperimentalStdlibApi
+inline fun <reified T, R> Flow<VMState<T>>.catchSuccess(crossinline map: (Result.Success<T>) -> R): Flow<R> {
+    return this.filterIsInstance<Result.Success<T>>().map(map)
+}
+
+@ExperimentalStdlibApi
+inline fun <reified T> Flow<VMState<T>>.catchError(): Flow<Result.Error> {
+    return this.filterIsInstance<Result.Error>()
+}
+
+@ExperimentalStdlibApi
+inline fun <reified T> Flow<VMState<T>>.catchError(crossinline map: (Result.Error) -> VMException): Flow<VMException> {
+    return this.filterIsInstance<Result.Error>().map(map)
+}
+// endregion
+
+// region Effect
+@ExperimentalStdlibApi
 fun <T> VMState<T>.onSuccess(bloc: (T) -> Unit): VMState<T> {
     return this.also {
         if (this is Result.Success) {
@@ -63,29 +93,12 @@ fun <T> VMState<T>.onSuccess(bloc: (T) -> Unit): VMState<T> {
     }
 }
 
+@ExperimentalStdlibApi
 inline fun <reified T> StateFlow<VMState<T>>.onInit(crossinline bloc: () -> Unit): Flow<VMState<T>> {
     return this.onStart {
         if (value is VMState.Initial)
             bloc()
     }
 }
-
-inline fun <reified T> Flow<VMState<T>>.catchSuccess(): Flow<Result.Success<T>> {
-    return this.filterIsInstance<Result.Success<T>>()
-}
-
-inline fun <reified T, R> Flow<VMState<T>>.catchSuccess(crossinline map: (Result.Success<T>) -> R): Flow<R> {
-    return this.filterIsInstance<Result.Success<T>>().map(map)
-}
-
-inline fun <reified T> Flow<VMState<T>>.catchError(): Flow<Result.Error> {
-    return this.filterIsInstance<Result.Error>()
-}
-
-inline fun <reified T> Flow<VMState<T>>.catchError(crossinline map: (Result.Error) -> VMException): Flow<VMException> {
-    return this.filterIsInstance<Result.Error>().map(map)
-}
-
-fun <T> mutableVMStateFlow(): MutableStateFlow<VMState<T>> = MutableStateFlow(initial())
-
+// endregion
 // endregion
