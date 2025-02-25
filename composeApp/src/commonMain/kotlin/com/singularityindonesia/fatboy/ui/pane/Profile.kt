@@ -13,20 +13,15 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.singularityindonesia.core.oneMinuteState
+import com.singularityindonesia.user.LocalUser
 import com.singularityindonesia.user.User
 
-class ProfileViewModel(
-    private val user: User = User.getInstance()
-) : ViewModel() {
-    val userRecord = user.record.oneMinuteState(viewModelScope, null)
-}
 
 @Composable
 fun Profile(
     modifier: Modifier = Modifier,
-    vm: ProfileViewModel = viewModel { ProfileViewModel() }
 ) {
-    val userRecord by vm.userRecord.collectAsStateWithLifecycle()
+    val userRecord = LocalUser.current
 
     LazyColumn(
         modifier = modifier,
