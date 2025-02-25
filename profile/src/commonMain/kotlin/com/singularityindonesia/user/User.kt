@@ -34,6 +34,8 @@ class User(
             val response = UserRecord(
                 id = "Atma",
                 name = "Singularity",
+                email = "singularity.indonesia@gmail.com",
+                avatarUrl = "https://lh3.googleusercontent.com/ogw/AF2bZyjbDgc0ZOXXbxcJzizVaavfmae3M5On3NwysuLD1m4_5A=s64-c-mo"
             )
             _state.update { success(response) }
         }.handleException { e ->
