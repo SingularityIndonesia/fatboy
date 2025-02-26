@@ -5,10 +5,8 @@ import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.capitalize
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.singularityindonesia.core.navigation.CurrentDestination
 import com.singularityindonesia.core.navigation.DestinationProvider
 import com.singularityindonesia.fatboy.ui.component.HeaderComponent1
 import com.singularityindonesia.fatboy.ui.navigation.HomeBottomNavigator
