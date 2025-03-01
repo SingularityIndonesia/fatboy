@@ -2,6 +2,7 @@ package com.singularityindonesia.fatboy
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeContentPadding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -26,7 +27,7 @@ fun App() {
             Scaffold(
                 topBar = {
                     HeaderComponent1(
-                        modifier = Modifier.safeContentPadding(),
+                        modifier = Modifier.statusBarsPadding(),
                         goToProfile = {
                             navController.navigate(Route.Profile.route)
                         }
