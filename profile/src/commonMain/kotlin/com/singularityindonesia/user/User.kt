@@ -15,16 +15,13 @@ class User(
         }
     }
 
-    private val _state = MutableStateFlow<VMState<UserRecord>>(VMState.Initial)
-    val state = _state
-        .onStart {
-            if (_state.value is VMState.Initial)
-                fetch()
-        }
+    private val _state = mutableVMStateFlow<UserRecord>()
 
-    val record = state
-        .filterIsInstance<Result.Success<UserRecord>>()
-        .map { it.data }
+    @OptIn(ExperimentalStdlibApi::class)
+    val state = _state.onInit { fetch() }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    val record = state.catchSuccess { it.data }
 
     private var fetchingJob: Job? = null
 
@@ -37,16 +34,12 @@ class User(
             val response = UserRecord(
                 id = "Atma",
                 name = "Singularity",
+                email = "singularity.indonesia@gmail.com",
+                avatarUrl = "https://lh3.googleusercontent.com/ogw/AF2bZyjbDgc0ZOXXbxcJzizVaavfmae3M5On3NwysuLD1m4_5A=s64-c-mo"
             )
             _state.update { success(response) }
-        }.apply {
-            invokeOnCompletion { e ->
-                if (e == null) return@invokeOnCompletion
-                val exception = toVmException(e)
-                _state.update {
-                    error(exception = exception)
-                }
-            }
+        }.handleException { e ->
+            _state.update { error(e) }
         }
 
         return fetchingJob!!

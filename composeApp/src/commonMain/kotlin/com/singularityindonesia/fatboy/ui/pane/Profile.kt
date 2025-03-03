@@ -30,19 +30,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.singularityindonesia.core.oneMinuteState
 import com.singularityindonesia.fatboy.ui.component.CardWrapper
 import com.singularityindonesia.user.User
+import com.singularityindonesia.user.LocalUser
 
-class ProfileViewModel(
-    private val user: User = User.getInstance()
-) : ViewModel() {
-    val userRecord = user.record.oneMinuteState(viewModelScope, null)
-}
 
 @Composable
 fun Profile(
     modifier: Modifier = Modifier,
-    vm: ProfileViewModel = viewModel { ProfileViewModel() }
 ) {
-    val userRecord by vm.userRecord.collectAsStateWithLifecycle()
+    val userRecord = LocalUser.current
 
     LazyColumn(
         modifier = Modifier
