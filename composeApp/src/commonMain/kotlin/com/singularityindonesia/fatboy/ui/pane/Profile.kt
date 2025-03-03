@@ -14,23 +14,15 @@ import androidx.compose.material.icons.rounded.Place
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.singularityindonesia.core.oneMinuteState
 import com.singularityindonesia.fatboy.ui.component.CardWrapper
-import com.singularityindonesia.user.User
 import com.singularityindonesia.user.LocalUser
+import com.singularityindonesia.user.UserRecord
 
 
 @Composable
@@ -48,7 +40,7 @@ fun Profile(
         contentPadding = PaddingValues(16.dp)
     ) {
         item(key = 0) {
-            ProfileHeader()
+            ProfileHeader(user = userRecord)
         }
         item(key = 1) {
             ProfileCardMenu(
@@ -73,14 +65,14 @@ fun Profile(
                         title = "Push notification",
                         icon = Icons.Rounded.Person,
                         haveSwitchButton = true,
-                        switchButtonChecked = {  },
+                        switchButtonChecked = { },
                         action = {}
                     ),
                     ProfileCardItem(
                         title = "Face ID",
                         icon = Icons.Rounded.Person,
                         haveSwitchButton = true,
-                        switchButtonChecked = {  },
+                        switchButtonChecked = { },
                         action = {}
                     ),
                     ProfileCardItem(
@@ -102,6 +94,7 @@ fun Profile(
 
 @Composable
 private fun ProfileHeader(
+    user: UserRecord?,
     action: () -> Unit = {}
 ) {
     Column(
@@ -121,7 +114,7 @@ private fun ProfileHeader(
             contentDescription = null,
         )
         Text(
-            text = "Profile",
+            text = user?.name ?: "Anonymous",
             style = MaterialTheme.typography.titleLarge,
             fontWeight = FontWeight.SemiBold
         )
